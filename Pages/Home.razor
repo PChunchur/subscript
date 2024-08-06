@@ -1,23 +1,112 @@
 ﻿@page "/"
+@using System.ComponentModel.DataAnnotations
+@using MudBlazor
 
+<h3 class="header">Add a New Subscription</h3>
+<MudDivider DividerType="DividerType.Middle" Class="my-6"/>
 
-<PageTitle>Home</PageTitle>
-<div class="home-container flex flex-column justify-start">
-    <div class="add-btn-container">
-        <button class="add-btn"> add entry </button>
-    </div>
-     <div class="entries-container ">
-        <!-- Example entry row -->
-        <div class="entry-row">
-            <div class="entry-buttons">
-                <button class="delete-btn">Delete</button>
-                <button class="note-btn">Add Note</button>
-            </div>
-            <div class="entry-content">
-                <!-- Replace this with dynamic content for each entry -->
-                <p>Entry 1: Subscription details or any other info</p>
-            </div>
+<div class="centre-container">
+<MudPaper Class="pa-16 ma-2 form-container" Elevation="4">
+    <EditForm Model="@subscription" OnValidSubmit="@HandleValidSubmit">
+        <DataAnnotationsValidator />
+        <ValidationSummary />
+
+        <div class="form-group">
+            <label for="name">Name of Subscription</label>
+            <InputText id="name" class="form-control" @bind-Value="@subscription.Name" placeholder="e.g., Netflix, Rent, Electricity Bill" />
+            <ValidationMessage For="@(() => subscription.Name)" />
         </div>
-        <!-- Repeat .entry-row for more entries -->
-    </div>
+
+        <div class="form-group">
+            <label for="type">Type of Subscription</label>
+            <InputText id="type" class="form-control" @bind-Value="@subscription.Type" placeholder="e.g., Entertainment, Utility" />
+            <ValidationMessage For="@(() => subscription.Type)" />
+        </div>
+
+        <div class="form-group">
+            <label for="reminder-frequency">Reminder Frequency</label>
+            <InputSelect id="reminder-frequency" class="form-control" @bind-Value="@subscription.ReminderFrequency">
+                <option value="">Select a frequency</option>
+                <option value="Monthly">Monthly</option>
+                <option value="Quarterly">Quarterly</option>
+                <option value="Half Yearly">Half Yearly</option>
+                <option value="Annually">Annually</option>
+            </InputSelect>
+            <ValidationMessage For="@(() => subscription.ReminderFrequency)" />
+        </div>
+
+        <div class="form-group">
+            <label for="amount">Amount</label>
+            <InputNumber id="amount" class="form-control" @bind-Value="@subscription.Amount" placeholder="e.g., 19.99" />
+            <ValidationMessage For="@(() => subscription.Amount)" />
+        </div>
+
+        <MudButton Type="ButtonType.Submit" Variant="Variant.Filled" Class="green-button">Add</MudButton>
+    </EditForm>
+</MudPaper>
 </div>
+
+<style>
+.centre-container {
+    display: flex;
+    justify-content: center; /* Center horizontally */
+    align-items: center;    /* Center vertically */
+               /* Full viewport width */
+    margin: 0;
+}
+    .header{
+  color: linear-gradient(45deg, #091F3F 40%, #527895 95%);
+}
+.form-group {
+  margin-bottom: 15px;;
+}
+.form-control {
+  width: 100%;
+  padding: 10px;
+  margin-top: 5px;
+  margin-bottom: 5px;
+  box-sizing: border-box;
+}
+.green-button {
+  background-color: #28a745; /* Green background */
+  color: #fff; /* White text */
+  border-color: #28a745; /* Green border */
+}
+.green-button:hover {
+  background-color: #218838; /* Darker green on hover */
+  border-color: #1e7e34; /* Darker green border on hover */
+}
+.form-container {
+  background-color: #f5f5f5; /* Dark tone of white */
+  width: 80%;
+  margin: 0 auto; /* Center the MudPaper */
+  padding: 20px; /* Optional padding */
+}
+</style>
+
+
+@code {
+    private SubscriptionModel subscription = new SubscriptionModel();
+
+    private void HandleValidSubmit()
+    {
+        // Handle the valid form submission (e.g., add to a list or send to a server)
+        Console.WriteLine("Form submitted successfully!");
+    }
+
+    public class SubscriptionModel
+    {
+        [Required(ErrorMessage = "Please enter the subscription name.")]
+        public string Name { get; set; } = string.Empty;
+
+        [Required(ErrorMessage = "Please enter the type of subscription.")]
+        public string Type { get; set; } = string.Empty;
+
+        [Required(ErrorMessage = "Please enter the reminder frequency.")]
+        public string ReminderFrequency { get; set; } = string.Empty;
+
+      [Required(ErrorMessage = "Please enter the amount.")]
+        [Range(0, double.MaxValue, ErrorMessage = "Please enter a valid amount.")]
+        public decimal Amount { get; set; }
+    }
+}
