@@ -1,0 +1,66 @@
+.header {
+    margin-bottom: 5px;
+  }
+.home-container{
+    position: relative;
+    flex-direction: column;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    background-color: whitesmoke;
+}
+
+  .add-btn-container {
+    position: absolute;
+    top: 0;
+    left: 0;
+    border: 1px solid gray;
+     
+  }
+
+  .entries-container {
+    width: 100%;
+    max-width: 800px; /* Set max width for the entries container */
+    display: flex;
+    flex-direction: column;
+    gap: 4px; /* Space between each entry */
+  }
+  .entry-row {
+    display: flex;
+    align-items: center;
+    padding: 2px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+    background-color: #fff;
+  }
+  .entry-buttons {
+    display: flex;
+    flex-direction: column;
+    gap: 5px;
+    margin-right: 10px;
+  }
+  .delete-btn, .note-btn {
+    padding: 5px 10px;
+    font-size: 14px;
+    cursor: pointer;
+    border: none;
+    border-radius: 3px;
+  }
+  .delete-btn {
+    background-color: #ff4d4d;
+    color: #fff;
+  }
+  .note-btn {
+    background-color: #4CAF50;
+    color: #fff;
+  }
+  .entry-content {
+    flex-grow: 1;
+    display: flex;
+    align-items: center;
+  }
+  .content {
+    margin-top: 4em; /* Adjust this value to create space between the button and the content */
+  }
